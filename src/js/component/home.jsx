@@ -1,16 +1,22 @@
 import React from "react";
-import SecondsCounter from "/workspace/Simple-Counter-with-React/src/js/component/counter.jsx";
 
+//include images into your bundle
+import rigoImage from "../../img/rigo-baby.jpg";
+import SecondsCounter from "Seco"
 
 //create your first component
 const Home = () => {
 	return (
-		<>
-		
-		<div className="text-center">
-			<SecondsCounter/>
+		<div>
+			<h1 className="text-center mt-5">Contador React</h1>
+			
+			<p>
+				Made by{" "}
+				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
+				love!
+			</p>
+			
 		</div>
-		</>
 	);
 };
 

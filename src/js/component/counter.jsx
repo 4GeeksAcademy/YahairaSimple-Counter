@@ -1,69 +1,77 @@
-import { string } from "prop-types";
-import React from "react";
-import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+/* codigo para mostrar el valor de los segundos del reloj*/
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+import React, { useState, useEffect } from "react";
 
+//inicializacion de variables
+var decSeg = 0; //decen seconds
+var uniMin = 0; //unites minutes
+var decMin = 0; //decen minutes
+var uniHour = 0; //unites horas
+var DecHour = 0; //decen hours
+let DuniHour = 0; //unites hours auxiliary var to watch in display
+const Counter = (props) => {
+	var uniSeg = props.valor; //assign to value index.js Valor=Seconds to unit seconds var
+	if (props.resetea == 0) {
+		if (uniSeg == 10) {
+			uniSeg = 0;
+			decSeg = decSeg + 1;
+		}
 
+		if (decSeg == 6) {
+			decSeg = 0;
+			uniMin = uniMin + 1;
+		} else {
+			decSeg = decSeg;
+		}
 
-const SecondsCounter = () => {
+		if (uniMin == 10) {
+			uniMin = 0;
+			decMin = decMin + 1;
+		}
 
-	const [units, setUnits] = useState(0);
-	const [tens, setTens] = useState(0);
-	const [hundreds, setHundreds] = useState(0)
-	const [thousands, setThousands] = useState(0)
-	const [tThousands, setTthousands] = useState(0)
-	const [hThousands, setHthousands] = useState(0)
-
-	let timer;
-	useEffect(() => {
-		timer = setInterval(
-			function () {
-				setUnits(units + 1);
-				if (units === 9) {
-					setUnits(0);
-					setTens(tens + 1);
-				}
-				if (tens === 9) {
-					setTens(0);
-					setHundreds(hundreds + 1);
-				}
-				if (hundreds === 9) {
-					setHundreds(0);
-					setThousands(thousands + 1);
-				}
-				if (thousands === 9) {
-					setThousands(0);
-					setTthousands(tThousands + 1);
-				}
-				if (tThousands === 9) {
-					setTthousands(0);
-					setHthousands(hThousands + 1);
-				}
-				if (hThousands === 9) {
-					setHthousands(0);
-				}
-			}, 1000
-		)
-		return () => clearInterval(timer)
-	});
-
+		if (decMin == 6) {
+			decMin = 0;
+			uniHour = uniHour + 1;
+			DuniHour = DuniHour + 1;
+		}
+		//switch for give format Hour to each Numbers in Display
+		switch (uniHour) {
+			case 10:
+				DuniHour = 0;
+				DecHour = 1;
+				break;
+			case 11:
+				DuniHour = 1;
+				DecHour = 1;
+				break;
+			case 12:
+				DuniHour = 0;
+				DecHour = 0;
+				uniHour = 0;
+				break;
+		}
+	} else {
+		decSeg = 0; //decen seconds
+		uniMin = 0; //unites minutes
+		decMin = 0; //decen minutes
+		uniHour = 0; //unites horas
+		DecHour = 0; //decen hours
+		DuniHour = 0;
+	}
 
 	return (
-		<div className=" row bg-dark d-flex p-2 justify-content-between align-items-center">
-			<div className=" col p-0 m-3 bg-secondary fs-1" ><FontAwesomeIcon icon={faClock}></FontAwesomeIcon></div>
-			<div className=" col p-0 m-3 bg-secondary fs-1">{hThousands}</div>
-			<div className=" col p-0 m-3 bg-secondary fs-1">{tThousands}</div>
-			<div className=" col p-0 m-3 bg-secondary fs-1">{thousands}</div>
-			<div className=" col p-0 m-3 bg-secondary fs-1">{hundreds}</div>
-			<div className=" col p-0 m-3 bg-secondary fs-1">{tens}</div>
-			<div className=" col p-0 m-3 bg-secondary fs-1">{units}</div>
-
+		<div className="bigcounter">
+			<div>
+				<i className="far fa-clock"></i>
+			</div>
+			<div className="clockcounter">{DecHour}</div>
+			<div className="clockcounter">{DuniHour}</div>
+			<div className="clockcounter">{decMin}</div>
+			<div className="clockcounter">{uniMin}</div>
+			<div className="clockcounter">{decSeg}</div>
+			<div className="clockcounter">{uniSeg}</div>
 		</div>
 	);
 };
 
-export default SecondsCounter;
+export default Counter;
